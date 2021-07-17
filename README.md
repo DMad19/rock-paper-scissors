@@ -1,0 +1,1 @@
+this is about making a game where a person plays rocl-paper-scissors with the pc 
