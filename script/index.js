@@ -1,11 +1,33 @@
-//player selecting a option
-let playerPlay = function()
+//noting playerSelection,computerSelection
+let playerSelection,computerSelection;
+
+// Noting the player's score and computer's score 
+let playerScore = 0 ,computerScore = 0;
+
+//selecting all buttons
+const buttons = document.querySelectorAll('.bttn');
+
+//select-area manipulating
+const select = document.querySelector('#select');
+
+//reload button
+const reload = document.querySelector(".restart");
+
+//end music
+var won_audio = new Audio('/Music/gta.mp3');
+var lost_audio = new Audio('/Music/Mario_GameOver.mp3');
+
+//getting score in the scoreboard
+function Restart()
 {
-    let playerSelection = prompt("enter rock or paper or scissors");
-    console.log(`${playerSelection.toLowerCase()} is your selection`);
-    return playerSelection;
+    playerScore = 0;
+    computerScore = 0;
 }
 
+//disabling buttons after a win
+let disabled = function(){   
+    buttons.forEach((button)=>button.style.display = "none");
+}
 //computer selecting a option
 let computerPlay = function(){
     let randomNum = Math.floor(Math.random()*1000);
@@ -23,35 +45,54 @@ let computerPlay = function(){
     }
 };
 
-// Noting the player's score and computer's score 
-let playerScore = 0 ,computerScore = 0;
-
+//noting score in the scoreboard
+let getScore = function(playerScore,computerScore)
+{
+    const Pscore = document.querySelector("#playerScore");
+    Pscore.innerHTML = `<span>${playerScore}</span>`;
+    const Cscore = document.querySelector("#computerScore");
+    Cscore.innerHTML = `<span>${computerScore}</span>`
+}
 //Round of a game
 let playRound = function()
 {
 
-    //player selection over three options
-    let playerSelection = playerPlay().toLowerCase();
-
     //computer selection over three options
-    let computerSelection = computerPlay().toLowerCase();
+    computerSelection = computerPlay().toLowerCase();
 
     if((playerSelection == "rock" && computerSelection == "paper") || (playerSelection == "paper" && computerSelection == "scissors") || (playerSelection == "scissors" && computerSelection == "rock"))
     {
-        console.log(`${computerSelection} is computer's selection`);
-        console.log(`${computerSelection} won over ${playerSelection}. Mission Failed`)
-        return ++computerScore;
+        select.innerHTML = `Bot's ${computerSelection} defeated your ${playerSelection}</span>`
+        computerScore++;
+        getScore(playerScore,computerScore);
+        if(computerScore ==5)
+        {
+            disabled();
+            reload.setAttribute('style','visibility:visible');
+            reload.addEventListener('click',()=>window.location.reload()); 
+            select.innerHTML = "<span>Game over.You are defeated by Bot</span>";
+            lost_audio.play();
+        }
     }
     else if(playerSelection == computerSelection)
     {
-        console.log(`${computerSelection} is computer's selection`);
-        console.log(`Tie.`);
+        select.innerHTML = 'Tied';
     }
     else if((computerSelection == "rock" && playerSelection == "paper" ) || (computerSelection == "paper" && playerSelection == "scissors") ||(computerSelection == "scissors" && playerSelection == "rock"))
     {
-        console.log(`${computerSelection} is computer's selection`);
-        console.log(`${playerSelection} won over ${computerSelection}. Mission passed`);
-        return ++playerScore;
+        select.innerHTML = `your ${playerSelection} won over ${computerSelection}</span>`
+        playerScore++;
+        getScore(playerScore,computerScore);
+        if(playerScore==5)
+        {
+            disabled();
+            reload.setAttribute('style','visibility:visible');
+            reload.addEventListener('click',()=>window.location.reload());
+            select.innerHTML = "<span>Game won.Respect++</span>";
+            won_audio.play();
+            setTimeout(function(){won_audio.pause()},15000);
+        }
+        return playerScore;
     }
     else
     {
@@ -61,20 +102,9 @@ let playRound = function()
 
 };
 
-let game = function()
-{
-    while(!(playerScore>=5) && !(computerScore>=5) )
-    {
-        playRound();
-        console.log(`score is ${playerScore}-${computerScore}`);
-    }
-    if(playerScore>computerScore)
-    {
-        console.log(`Game won . Respect++`);
-    }
-    else
-    {
-        console.log(`Game over . Respect--`)
-    }
-}
-game();
+buttons.forEach((button)=>{
+        button.addEventListener('click',()=>{
+            playerSelection = button.value;
+            playRound();
+        });
+});

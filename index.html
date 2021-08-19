@@ -3,9 +3,37 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/styles/index.css" rel="stylesheet">
         <title>Rock-Paper-Scissors</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body class="container-fluid" style="background-color: rgb(126, 120, 113);">
+        <div class="scorecard d-flex ml-auto mr-auto">
+            <div class="score">
+                <span>You:</span>
+                <span id="playerScore">0</span>
+            </div>
+            <div class="score">  
+                <span>Bot:</span>
+                <span id="computerScore">0</span>
+            </div>
+        </div>
+        <div class="your-choice ml-auto mr-auto ">
+            <div class="d-flex justify-content-center" id="select"><span>select your choice</span></div>
+            <div class="your-selection  d-flex ml-auto mr-auto">
+                <button class="bttn" value="rock"><img src="/images/rock.jfif" alt="rock"></button>
+                <button class="bttn" value="paper"><img src="/images/paper.jfif" alt="rock"></button>
+                <button class="bttn" value="scissors"><img src="/images/scissor.jfif" alt="rock"></button>
+            </div>
+        </div>
+        <div class=" d-flex justify-content-center ml-auto mr-auto">
+            <div class="result-board">
+                <div style="margin-top: 10px;"><button class="restart btn btn-success btn-lg " style="visibility:hidden;">restart</button></div>
+            </div>    
+        </div>
         <script src="/script/index.js"></script>
     </body>
 </html>
