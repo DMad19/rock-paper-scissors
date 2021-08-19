@@ -14,8 +14,8 @@ const select = document.querySelector('#select');
 const reload = document.querySelector(".restart");
 
 //end music
-var won_audio = new Audio('/Music/gta.mp3');
-var lost_audio = new Audio('/Music/Mario_GameOver.mp3');
+var won_audio = new Audio('\rock-paper-scissors\Music\gta.mp3');
+var lost_audio = new Audio('\rock-paper-scissors\Music\Mario_GameOver.mp3');
 
 //getting score in the scoreboard
 function Restart()
