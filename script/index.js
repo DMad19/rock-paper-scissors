@@ -1,110 +1,89 @@
-//noting playerSelection,computerSelection
-let playerSelection,computerSelection;
-
-// Noting the player's score and computer's score 
-let playerScore = 0 ,computerScore = 0;
-
-//selecting all buttons
-const buttons = document.querySelectorAll('.bttn');
-
-//select-area manipulating
-const select = document.querySelector('#select');
-
-//reload button
-const reload = document.querySelector(".restart");
-
-//end music
-var won_audio = new Audio('/rock-paper-scissors/Music/gta.mp3');
-var lost_audio = new Audio('/rock-paper-scissors/Music/Mario_GameOver.mp3');
-
-//getting score in the scoreboard
-function Restart()
-{
-    playerScore = 0;
-    computerScore = 0;
-}
-
-//disabling buttons after a win
-let disabled = function(){   
-    buttons.forEach((button)=>button.style.display = "none");
-}
-//computer selecting a option
-let computerPlay = function(){
-    let randomNum = Math.floor(Math.random()*1000);
-    if(randomNum%3 == "0")
+let playerScore = 0
+let ComputerScore = 0
+const buttons = document.querySelectorAll('.choices>button')
+const results = document.querySelector('.results')
+const pscore = document.querySelector('.pscore')
+const cscore = document.querySelector('.cscore')
+const restart = document.querySelector('#restart')
+const choices = document.querySelector('.choices')
+var won_audio = new Audio('./Music/gta.mp3');
+var lost_audio = new Audio('./Music/Mario_GameOver.mp3');
+ComputerPlay = () => {
+    let choice = Math.floor(Math.random()*3);
+    console.log(choice)
+    if(choice== 0)
     {
-        return "rock";
+        return 'rock'
     }
-    else if(randomNum%3 == "1")
+    else if(choice == 1)
     {
-        return "paper";
+        return 'paper'
     }
     else
     {
-        return "scissors";
+        return 'scissor'
     }
-};
-
-//noting score in the scoreboard
-let getScore = function(playerScore,computerScore)
-{
-    const Pscore = document.querySelector("#playerScore");
-    Pscore.innerHTML = `<span>${playerScore}</span>`;
-    const Cscore = document.querySelector("#computerScore");
-    Cscore.innerHTML = `<span>${computerScore}</span>`
 }
-//Round of a game
-let playRound = function()
-{
-
-    //computer selection over three options
-    computerSelection = computerPlay().toLowerCase();
-
-    if((playerSelection == "rock" && computerSelection == "paper") || (playerSelection == "paper" && computerSelection == "scissors") || (playerSelection == "scissors" && computerSelection == "rock"))
+playRound = (PlayerSelection,ComputerSelection) => {
+    if((PlayerSelection == 'rock' && ComputerSelection == 'scissor')||(PlayerSelection=='paper' && ComputerSelection=='rock') ||(PlayerSelection=='scissor' && ComputerSelection=='paper') )
     {
-        select.innerHTML = `Bot's ${computerSelection} defeated your ${playerSelection}</span>`
-        computerScore++;
-        getScore(playerScore,computerScore);
-        if(computerScore ==5)
-        {
-            disabled();
-            reload.setAttribute('style','visibility:visible');
-            reload.addEventListener('click',()=>window.location.reload()); 
-            select.innerHTML = "<span>Game over.You are defeated by Bot</span>";
-            lost_audio.play();
-        }
+        ++playerScore
+        return `You won,${PlayerSelection} defeated ${ComputerSelection}`
     }
-    else if(playerSelection == computerSelection)
+    else if(PlayerSelection == ComputerSelection)
     {
-        select.innerHTML = 'Tied';
-    }
-    else if((computerSelection == "rock" && playerSelection == "paper" ) || (computerSelection == "paper" && playerSelection == "scissors") ||(computerSelection == "scissors" && playerSelection == "rock"))
-    {
-        select.innerHTML = `your ${playerSelection} won over ${computerSelection}</span>`
-        playerScore++;
-        getScore(playerScore,computerScore);
-        if(playerScore==5)
-        {
-            disabled();
-            reload.setAttribute('style','visibility:visible');
-            reload.addEventListener('click',()=>window.location.reload());
-            select.innerHTML = "<span>Game won.Respect++</span>";
-            won_audio.play();
-            setTimeout(function(){won_audio.pause()},15000);
-        }
-        return playerScore;
+        return `both choose ${PlayerSelection} and ${ComputerSelection} `
     }
     else
     {
-        console.log("wrong input");
+        ++ComputerScore
+        return `you lost!${ComputerSelection} won over your ${PlayerSelection}`
     }
+}
+const play = ()=>{
+    buttons.forEach(button=>{
+        button.addEventListener('click',(e)=>{
+            ComputerSelection = ComputerPlay()
+            console.log(e.target.textContent)
+            console.log(playRound(e.target.alt,ComputerSelection))
+            pscore.textContent = `YOU : ${playerScore}`
+            cscore.textContent = `PC : ${ComputerScore}`
+            if(playerScore==5)
+            {
+                const resultdiv = document.createElement('div')
+                results.appendChild(resultdiv)
+                resultdiv.textContent = `YOU WON`
+                resultdiv.classList = 'resultdiv'
+                choices.setAttribute('style','display:none')
+                buttons.forEach(btn=>{
+                    btn.disabled = true
+                    restart.setAttribute('style','visibility:visible')
+                    won_audio.play();
+                    setTimeout(function(){won_audio.pause()},15000);
+                })
 
-
-};
-
-buttons.forEach((button)=>{
-        button.addEventListener('click',()=>{
-            playerSelection = button.value;
-            playRound();
-        });
-});
+            }
+            else if(ComputerScore == 5)
+            {
+                const resultdiv = document.createElement('div')
+                results.appendChild(resultdiv)
+                resultdiv.textContent = `COMPUTER WON`
+                resultdiv.classList = 'resultdiv'
+                choices.setAttribute('style','display:none')
+                buttons.forEach(btn=>{
+                    btn.disabled = true
+                    restart.setAttribute('style','visibility:visible')
+                    lost_audio.play();
+                    setTimeout(function(){lost_audio.pause()},15000);
+                })
+            }
+        })
+    })
+}
+play()
+const doRestart = () =>{
+    restart.addEventListener('click',()=>{
+        window.location.reload()
+    })
+}
+doRestart()

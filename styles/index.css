@@ -1,53 +1,78 @@
-.scorecard
-{
-    width :fit-content;
-    font-size: 4em;
-    margin-top: 10px;
+
+body{
+    background-color: #51505C;
 }
-.score > span
-{
-    display: block;
+.title{
+    background-color: #7CB488;
+    font-size: 5em;
     text-align: center;
+    color: blue;
+    text-shadow: 2px 1px rgb(40, 18, 3);
+    padding: 10px;
 }
-.score
-{
-    padding-left: 20px;
-    border:4px solid darkred;
-    background: rgb(77, 65, 2);
-    padding-right: 20px;
-    color: white;
-    padding-left: 20px;
+.choices > button > img{
+    height : 200px;
+    width: auto;
+    border: 5px ridge rgb(0, 0, 0);
 }
-#select
-{
-    color: tomato;
-    text-shadow: 2px 2px rgb(56, 34, 151);
-    margin-top: 20px;
+.choices > button > img:hover {
+    border: 5px solid blue;
+}
+.choices{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D1B4B6;
+    padding: 15px;
+}
+.results{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #93C4C0;
+    padding: 15px;
+}
+.results > div{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap: 30px;
+}
+.cscore{
+    color: crimson;
+    font-size: 3em;
+    font-weight: bold;
+}
+.pscore{
+    color: purple;
+    font-size: 3em;
+    font-weight: bold;
+}
+.resultdiv{
+    color: midnightblue;
     font-size: 4em;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #93C4C0;
+    border : 2px solid black;
+    padding : 3px;
 }
-.your-selection
-{
-    margin-top: 30px;
-    width: fit-content;
-}
-.your-selection > button
-{
-    border-collapse: collapse;
-    border: 3px solid rgb(163, 240, 48);
-    box-shadow: 2px 3px springgreen;
-    background: darkcyan;
-}
-.your-selection > button :hover
-{
-    border : 4px solid red;
-}
-.result-board
-{
-    width: fit-content;
-    margin-top: 15px;
-}
-.result-board>div
-{
-    display: block;
+#footer{
+    position: fixed;
+    bottom: 0px;
+    height: 50px;
+    left:0;
+    background-color: #AA9084;
+    width : 100%;
     text-align: center;
+    font-size: 2em;
+}
+#restart{
+    background-color : red;
+    border: 1px solid red;
+    border-radius: 7%;
+    font-size:larger;
+    color:white;
+    margin:30px;
 }
