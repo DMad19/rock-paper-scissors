@@ -1,1 +1,1 @@
-this is about making a game where a person plays rocl-paper-scissors with the pc 
+this is about making a game where a person plays rock-paper-scissors with the pc 
